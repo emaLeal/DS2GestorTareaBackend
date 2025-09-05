@@ -21,6 +21,7 @@ class Task(models.Model):
     start_date = models.DateField()
     due_date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="id")  # Usuario que crea la tarea
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         db_table = "Task"  # Nombre de la tabla en la BD
