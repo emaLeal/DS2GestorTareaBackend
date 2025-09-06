@@ -15,13 +15,13 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'username',
             'first_name',
             'last_name',
             'document_id',
             'department_id',
             'role_id',
             'role_description',
+            'email',
                   ]
 
 class ChangePasswordSerializer(serializers.Serializer):
