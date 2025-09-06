@@ -10,11 +10,23 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=130, default="")
     last_name = models.CharField(max_length=130, default="")
     document_id = models.CharField(max_length=20, unique=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='users')
-    role = models.ForeignKey(Role, on_delete=models.CASCADE, related_name='users')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='users', default=1)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, default=1)
+    is_active = models.BooleanField(default=True),
 
-    # Eliminamos campos redundantes, AbstractUser ya tiene username, password, email
+
+    # Eliminamos campos redundantes, AbstractUser ya     tiene username, password, email
     # Puedes añadir más si lo necesitas: phone, address, etc.
+
+    REQUIRED_FIELDS = [
+        'first_name',
+        'last_name',
+        'email',
+        'role',
+        'department',
+        ]
+
+    USERNAME_FIELD = 'document_id'
 
     class Meta:
         db_table = "User"
