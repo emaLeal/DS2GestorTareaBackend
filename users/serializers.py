@@ -19,10 +19,20 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
             'document_id',
             'department_id',
+            'email',
             'role_id',
             'role_description',
-            'email',
+            'identification_type',
+            'email'
                   ]
+        extra_kwargs = {
+            "password": {"write_only": True}  # para no devolverla en la respuesta
+        }
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        user = User.objects.create_user(**validated_data, password=password)
+        return user
 
 class ChangePasswordSerializer(serializers.Serializer):
     document_id = serializers.CharField(required=True)

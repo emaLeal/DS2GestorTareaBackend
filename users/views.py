@@ -21,8 +21,7 @@ def register(request):
     '''Recieves the code and password from a user and returns a token'''
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-
-        serializer.save()
+        user = serializer.save()
         user = User.objects.get(document_id=request.data['document_id'])
         user.set_password(request.data['password'])
         user.save()
