@@ -22,7 +22,8 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'role_id',
             'role_description',
-            'email',
+            'identification_type',
+            'email'
                   ]
         extra_kwargs = {
             "password": {"write_only": True}  # para no devolverla en la respuesta
