@@ -21,8 +21,8 @@ class UserSerializer(serializers.ModelSerializer):
             'department_id',
             'email',
             'role_id',
-            'identification_type',
-            'role_description'
+            'role_description',
+            'email',
                   ]
         extra_kwargs = {
             "password": {"write_only": True}  # para no devolverla en la respuesta
