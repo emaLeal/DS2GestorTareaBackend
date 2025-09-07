@@ -3,8 +3,8 @@ from users.models import User  # Asumiendo que tienes un modelo de usuario en us
 
 class Task(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'Pendiente'),
-        ('in_progress', 'En Progreso'),
+        ('To do', 'To do'),
+        ('in-progress', 'En Progreso'),
         ('completed', 'Completada'),
     ]
 
@@ -16,7 +16,7 @@ class Task(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='To do')
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium')
     start_date = models.DateField()
     due_date = models.DateField()
