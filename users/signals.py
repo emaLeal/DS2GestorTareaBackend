@@ -2,8 +2,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.urls import reverse
-
 from django_rest_passwordreset.signals import reset_password_token_created
+import os
 
 
 @receiver(reset_password_token_created)
@@ -21,12 +21,9 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     # send an e-mail to the user
     context = {
         'current_user': reset_password_token.user,
-        'name': reset_password_token.user.name,
+        'name': reset_password_token.user.first_name,
         'email': reset_password_token.user.email,
-        # 'reset_password_url': "{}?token={}".format(
-        #     instance.request.build_absolute_uri(reverse('password_reset:reset-password-confirm')),
-        #     reset_password_token.key),
-        "reset_password_url": f"https://ds-1-proyecto-frontend.vercel.app/change-password/{reset_password_token.key}"
+        "reset_password_url": f"http://localhost:4200/change-password/{reset_password_token.key}"
     }
     print(context['reset_password_url'])
 
@@ -40,7 +37,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         # message:
         email_plaintext_message,
         # from:
-        "dsapp6393@gmail.com",
+        os.getenv('EMAIL_HOST_USER'),
         # to:
         [reset_password_token.user.email]
     )
