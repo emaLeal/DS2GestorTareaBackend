@@ -84,7 +84,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:4200',
-    'https://ds-2-gestor-tarea-frontend-nwlo2s2gc-leal31s-projects.vercel.app'
+    'https://ds-2-gestor-tarea-frontend.vercel.app/'
 )
 
 ROOT_URLCONF = 'DS2GestorTareaBackend.urls'
