@@ -15,7 +15,8 @@ class CustomUserManager(BaseUserManager):
                     identification_type,
                     role,
                     password, 
-                    is_superuser=False
+                    is_superuser=False,
+                    is_staff=False
                   ):
         """
         Create and save a User with the given email and password.
@@ -26,6 +27,7 @@ class CustomUserManager(BaseUserManager):
         
         if role.id == 1:
             is_superuser = True
+            is_staff=True
      
      
         user = self.model(document_id=document_id, 
@@ -35,7 +37,8 @@ class CustomUserManager(BaseUserManager):
                           email=email,
                           identification_type=identification_type,
                           role=role,
-                          is_superuser=is_superuser
+                          is_superuser=is_superuser,
+                          is_staff=is_staff
                           )
         user.set_password(str(password))
         user.save()

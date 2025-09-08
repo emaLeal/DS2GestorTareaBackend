@@ -14,7 +14,7 @@ from .serializers import TaskSerializer
 def get_tasks(request):
     tasks = Task.objects.filter(is_active=True)
     serializer = TaskSerializer(tasks, many=True)
-    return Response(serializer)
+    return Response(serializer.data, status=200)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -22,7 +22,7 @@ def get_task_user(request):
     user = request.user
     tasks = Task.objects.filter(user=user, is_active=True)
     serializer = TaskSerializer(tasks, many=True)
-    return Response(serializer)
+    return Response(serializer.data, status=200)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
