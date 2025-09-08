@@ -32,7 +32,12 @@ SECRET_KEY = 'django-insecure-c@_80tnf_o*^0_cqg(b8!8wjie+1w=nia-ilujox#==hw97c(#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'ds2gestortareabackend.onrender.com',
+    'localhost',            # si también pruebas localmente
+    '127.0.0.1',
+]
+
 AUTH_USER_MODEL = "users.User"
 
 
