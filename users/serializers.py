@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
     department_id = serializers.PrimaryKeyRelatedField(
         source='department', queryset=Department.objects.all()
     )
+    department_name = serializers.CharField(source='department.name', read_only=True)
     role_id = serializers.PrimaryKeyRelatedField(
         source='role', queryset=Role.objects.all()
     )    
@@ -24,7 +25,8 @@ class UserSerializer(serializers.ModelSerializer):
             'role_id',
             'role_description',
             'identification_type',
-            'email'
+            'email',
+            'department_name'
                   ]
         extra_kwargs = {
             "password": {"write_only": True}  # para no devolverla en la respuesta
