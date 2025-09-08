@@ -18,6 +18,7 @@ User = get_user_model()
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
+    print(request.data)
     '''Recieves the code and password from a user and returns a token'''
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
