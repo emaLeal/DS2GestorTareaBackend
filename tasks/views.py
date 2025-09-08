@@ -46,7 +46,6 @@ def patch_task(request, id):
     
     # Copiar los datos del request
     data = request.data.copy()
-    
     # Serializar y actualizar parcialmente
     serializer = TaskSerializer(instance=task, data=data, partial=True)
 
