@@ -50,6 +50,7 @@ MIDDLEWARE = [
 # Permitir tu frontend local
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
+    "https://ds-2-gestor-tarea-frontend.vercel.app",
 ]
 
 # Application definition
