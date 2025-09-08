@@ -12,9 +12,32 @@ from .serializers import TaskSerializer
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_tasks(request):
-    tasks = Task.objects.filter(is_active=True)
-    serializer = TaskSerializer(tasks, many=True)
-    return Response(serializer.data)
+    queryset = Task.objects.filter(is_active=True)
+
+    # Filtros por query params
+    user_id = request.query_params.get('user_id')
+    status_value = request.query_params.get('status')
+    priority_value = request.query_params.get('priority')
+    created_by_id = request.query_params.get('created_by_id')
+    tag = request.query_params.get('tag')
+
+    if user_id:
+        queryset = queryset.filter(user_id=user_id)
+    if status_value:
+        queryset = queryset.filter(status=status_value)
+    if priority_value:
+        queryset = queryset.filter(priority=priority_value)
+    if created_by_id:
+        queryset = queryset.filter(created_by_id=created_by_id)
+    if tag:
+        queryset = queryset.filter(tags__contains=[tag])
+
+    # Paginacin
+    from rest_framework.pagination import PageNumberPagination
+    paginator = PageNumberPagination()
+    page = paginator.paginate_queryset(queryset.order_by('-created_at'), request)
+    serializer = TaskSerializer(page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
