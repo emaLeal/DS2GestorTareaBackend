@@ -35,6 +35,18 @@ DEBUG = True
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "users.User"
 
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # debe ir al inicio
+    'django.middleware.common.CommonMiddleware',
+    ...
+]
+
+# Permitir tu frontend local
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,7 +62,8 @@ INSTALLED_APPS = [
     'users',
     'corsheaders',
     'rest_framework_simplejwt',
-    'django_rest_passwordreset'
+    'django_rest_passwordreset',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
