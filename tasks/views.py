@@ -10,11 +10,11 @@ from .serializers import TaskSerializer
 
 # Create your views here.
 @api_view(['GET'])
-@permission_classes([IsAdminUser])
+@permission_classes([IsAuthenticated])
 def get_tasks(request):
     tasks = Task.objects.filter(is_active=True)
     serializer = TaskSerializer(tasks, many=True)
-    return Response(serializer)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -28,14 +28,14 @@ def get_task_user(request):
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def create_task(request):
-    # user = request.user
-    print(request.data)
+    user = request.user  # Usuario autenticado
     data = request.data.copy()
-    # data['user'] = user.id
+
     serializer = TaskSerializer(data=data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(created_by=user, updated_by=user)  # 🔹 Se asignan aquí
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])
@@ -43,13 +43,15 @@ def create_task(request):
 def patch_task(request, id):
     # Buscar la tarea por su ID
     task = get_object_or_404(Task, pk=id)
+    
     # Copiar los datos del request
     data = request.data.copy()
+    
     # Serializar y actualizar parcialmente
     serializer = TaskSerializer(instance=task, data=data, partial=True)
 
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(updated_by=request.user)  # 🔹 Actualiza solo el campo updated_by
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

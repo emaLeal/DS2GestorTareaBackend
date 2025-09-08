@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User  # Asumiendo que tienes un modelo de usuario en users.models
+from django.contrib.postgres.fields import ArrayField
 
 class Task(models.Model):
     STATUS_CHOICES = [
@@ -22,6 +23,7 @@ class Task(models.Model):
     due_date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="id")  # Usuario que crea la tarea
     is_active = models.BooleanField(default=True)
+    tags = ArrayField(models.CharField(max_length=50), blank=True, default=list)
 
     # --- AUDITORIA MINIMA---
     # Estos campos permiten rastrear *cuándo* y *por quién* se creó o actualizó la tarea.
