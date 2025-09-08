@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'django_rest_passwordreset',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
